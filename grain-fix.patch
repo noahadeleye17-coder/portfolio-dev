@@ -1,0 +1,35 @@
+diff --git a/components/sections/Hero.tsx b/components/sections/Hero.tsx
+index b9a840c..0181d9d 100644
+--- a/components/sections/Hero.tsx
++++ b/components/sections/Hero.tsx
+@@ -36,13 +36,13 @@ export default function Hero() {
+           No blend mode: on a near-black background, blend modes like
+           "overlay" barely register, so this layers directly with low
+           opacity instead. */}
+-      <div className="pointer-events-none absolute inset-0 opacity-[0.12]">
++      <div className="pointer-events-none absolute inset-0 opacity-[0.18]">
+         <svg className="w-full h-full">
+           <filter id="grain">
+             <feTurbulence
+               type="fractalNoise"
+-              baseFrequency="0.85"
+-              numOctaves={3}
++              baseFrequency="0.9"
++              numOctaves={2}
+               stitchTiles="stitch"
+               result="noise"
+             >
+@@ -53,12 +53,7 @@ export default function Hero() {
+                 repeatCount="indefinite"
+               />
+             </feTurbulence>
+-            <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise" />
+-            {/* Boosts contrast on the noise's alpha so specks read clearly
+-                instead of sitting in a flat, barely-visible midtone. */}
+-            <feComponentTransfer in="grayNoise">
+-              <feFuncA type="linear" slope="2.2" intercept="-0.35" />
+-            </feComponentTransfer>
++            <feColorMatrix in="noise" type="saturate" values="0" />
+           </filter>
+           <rect width="100%" height="100%" filter="url(#grain)" />
+         </svg>
