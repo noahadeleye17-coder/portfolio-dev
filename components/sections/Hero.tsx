@@ -21,9 +21,9 @@ const line = {
 };
 
 const headlineLines = [
-  "Noah Adeleye /",
-  "I build what everyone",
-  "just puts up with.",
+  "Full-stack Developer.",
+  "Building software",
+  "that solves problems",
 ];
 
 export default function Hero() {
@@ -41,7 +41,7 @@ export default function Hero() {
           variants={line}
           className="text-sm tracking-widest uppercase text-neutral-500 mb-6"
         >
-          Full-stack developer · Nigeria
+          Noah Adeleye · Nigeria
         </motion.p>
 
         <motion.div variants={line} className="relative">
@@ -58,7 +58,7 @@ export default function Hero() {
           variants={line}
           className="mt-6 max-w-xl text-neutral-400 text-lg"
         >
-          I notice the friction people just live with — then build the thing
+          I notice the friction people just live with, then build the thing
           that actually fixes it, properly.
         </motion.p>
       </motion.div>
