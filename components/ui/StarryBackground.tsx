@@ -9,6 +9,8 @@ type Star = {
   baseOpacity: number;
   twinkleSpeed: number;
   twinklePhase: number;
+  hue: number;
+  sparkle: boolean;
 };
 
 type ShootingStar = {
@@ -25,6 +27,12 @@ const STAR_COUNT = 180;
 
 function randomBetween(min: number, max: number) {
   return Math.random() * (max - min) + min;
+}
+
+// Light desaturated tint for the handful of non-neutral stars —
+// 210 = cool blue-white, 40 = warm amber-white.
+function hueToRgb(hue: number): string {
+  return hue === 210 ? "205,220,255" : "255,235,205";
 }
 
 /**
@@ -51,14 +59,26 @@ export default function StarryBackground() {
     let nextShootIn = randomBetween(60, 180);
 
     function seedStars() {
-      stars = Array.from({ length: STAR_COUNT }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 1.4 + 0.3,
-        baseOpacity: Math.random() * 0.5 + 0.35,
-        twinkleSpeed: Math.random() * 0.02 + 0.006,
-        twinklePhase: Math.random() * Math.PI * 2,
-      }));
+      stars = Array.from({ length: STAR_COUNT }, () => {
+        // A handful of "big" stars stand out and get a sparkle flare;
+        // most stay small, soft points.
+        const isBig = Math.random() < 0.12;
+        const radius = isBig
+          ? randomBetween(1.4, 2.2)
+          : randomBetween(0.4, 1.2);
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius,
+          baseOpacity: Math.random() * 0.4 + 0.45,
+          twinkleSpeed: Math.random() * 0.02 + 0.006,
+          twinklePhase: Math.random() * Math.PI * 2,
+          // Mostly neutral-white, with a few warm and cool outliers —
+          // real starfields aren't uniformly white.
+          hue: Math.random() < 0.7 ? 0 : Math.random() < 0.5 ? 210 : 40,
+          sparkle: isBig,
+        };
+      });
     }
 
     function resize() {
@@ -91,10 +111,46 @@ export default function StarryBackground() {
       for (const star of stars) {
         const twinkle = Math.sin(frame * star.twinkleSpeed + star.twinklePhase);
         const opacity = Math.min(1, Math.max(0, star.baseOpacity + twinkle * 0.3));
+        const color = star.hue === 0 ? "255,255,255" : hueToRgb(star.hue);
+
+        // Soft glow: a radial falloff a few times the star's own radius,
+        // rather than a hard-edged dot — this is what reads as "star" vs
+        // "circle" from a normal viewing distance.
+        const glowRadius = star.radius * 5;
+        const glow = ctx!.createRadialGradient(
+          star.x,
+          star.y,
+          0,
+          star.x,
+          star.y,
+          glowRadius
+        );
+        glow.addColorStop(0, `rgba(${color},${opacity})`);
+        glow.addColorStop(0.4, `rgba(${color},${opacity * 0.25})`);
+        glow.addColorStop(1, `rgba(${color},0)`);
+        ctx!.fillStyle = glow;
         ctx!.beginPath();
-        ctx!.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(255,255,255,${opacity})`;
+        ctx!.arc(star.x, star.y, glowRadius, 0, Math.PI * 2);
         ctx!.fill();
+
+        // Bright core
+        ctx!.beginPath();
+        ctx!.arc(star.x, star.y, star.radius * 0.55, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${color},${Math.min(1, opacity * 1.3)})`;
+        ctx!.fill();
+
+        // Four-point sparkle flare for the handful of standout stars
+        if (star.sparkle) {
+          const flareLen = star.radius * 6 * (0.7 + twinkle * 0.3);
+          ctx!.strokeStyle = `rgba(${color},${opacity * 0.55})`;
+          ctx!.lineWidth = 0.6;
+          ctx!.beginPath();
+          ctx!.moveTo(star.x - flareLen, star.y);
+          ctx!.lineTo(star.x + flareLen, star.y);
+          ctx!.moveTo(star.x, star.y - flareLen);
+          ctx!.lineTo(star.x, star.y + flareLen);
+          ctx!.stroke();
+        }
       }
 
       nextShootIn -= 1;
