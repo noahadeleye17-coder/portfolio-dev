@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ease, duration } from "@/lib/motion";
-import DistortedText from "@/components/ui/DistortedText";
+import StarryBackground from "@/components/ui/StarryBackground";
 
 const container = {
   hidden: {},
@@ -28,29 +28,8 @@ const headlineLines = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 opacity-[0.18]">
-        <svg className="w-full h-full">
-          <filter id="grain">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.9"
-              numOctaves={2}
-              stitchTiles="stitch"
-              result="noise"
-            >
-              <animate
-                attributeName="seed"
-                values="1;25;50;75;1"
-                dur="1.4s"
-                repeatCount="indefinite"
-              />
-            </feTurbulence>
-            <feColorMatrix in="noise" type="saturate" values="0" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#grain)" />
-        </svg>
-      </div>
+    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 overflow-hidden bg-black">
+      <StarryBackground />
 
       <motion.div
         initial="hidden"
@@ -66,17 +45,13 @@ export default function Hero() {
         </motion.p>
 
         <motion.div variants={line} className="relative">
-          <h1
-            aria-hidden={false}
-            className="text-5xl md:text-8xl font-bold leading-[0.95] tracking-tight opacity-0 select-none"
-          >
+          <h1 className="text-5xl md:text-8xl font-bold leading-[0.95] tracking-tight text-white">
             {headlineLines.map((text, i) => (
               <span key={i} className="block">
                 {text}
               </span>
             ))}
           </h1>
-          <DistortedText lines={headlineLines} fontSizeDesktop={96} fontSizeMobile={48} />
         </motion.div>
 
         <motion.p
