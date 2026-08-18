@@ -41,7 +41,7 @@ export default function Hero() {
           variants={line}
           className="text-sm tracking-widest uppercase text-neutral-500 mb-6"
         >
-          Noah Adeleye · Nigeria
+          Noah Adeleye 
         </motion.p>
 
         <motion.div variants={line} className="relative">

@@ -21,7 +21,7 @@ export default function Navbar() {
                    bg-white/5 px-5 py-3 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
       >
         <span className="text-xs tracking-widest uppercase text-neutral-400 whitespace-nowrap">
-          Full-stack · Nigeria
+          Noah Adeleye · Nigeria
         </span>
 
         <ul className="flex items-center gap-6">
