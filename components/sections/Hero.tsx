@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ease, duration } from "@/lib/motion";
+import DistortedText from "@/components/ui/DistortedText";
 
-// Entrance choreography: label -> headline lines -> subtext,
-// staggered so the page feels like it's arriving, not just appearing.
 const container = {
   hidden: {},
   visible: {
@@ -21,13 +20,16 @@ const line = {
   },
 };
 
+const headlineLines = [
+  "Noah Adeleye /",
+  "I build what everyone",
+  "just puts up with.",
+];
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 overflow-hidden">
-      {/* Animated grain — a filter-driven texture, not a static PNG,
-          so the background feels alive even when nothing else moves.
-          Cursor-reactive text distortion is the next layer to add here. */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.12]">
         <svg className="w-full h-full">
           <filter id="grain">
             <feTurbulence
@@ -44,7 +46,10 @@ export default function Hero() {
                 repeatCount="indefinite"
               />
             </feTurbulence>
-            <feColorMatrix in="noise" type="saturate" values="0" />
+            <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise" />
+            <feComponentTransfer in="grayNoise">
+              <feFuncA type="linear" slope="2.2" intercept="-0.35" />
+            </feComponentTransfer>
           </filter>
           <rect width="100%" height="100%" filter="url(#grain)" />
         </svg>
@@ -63,17 +68,19 @@ export default function Hero() {
           Full-stack developer · Nigeria
         </motion.p>
 
-        <h1 className="text-5xl md:text-8xl font-bold leading-[0.95] tracking-tight">
-          <motion.span variants={line} className="block">
-            Noah Adeleye /
-          </motion.span>
-          <motion.span variants={line} className="block">
-            I build what everyone
-          </motion.span>
-          <motion.span variants={line} className="block">
-            just puts up with.
-          </motion.span>
-        </h1>
+        <motion.div variants={line} className="relative">
+          <h1
+            aria-hidden={false}
+            className="text-5xl md:text-8xl font-bold leading-[0.95] tracking-tight opacity-0 select-none"
+          >
+            {headlineLines.map((text, i) => (
+              <span key={i} className="block">
+                {text}
+              </span>
+            ))}
+          </h1>
+          <DistortedText lines={headlineLines} fontSizeDesktop={96} fontSizeMobile={48} />
+        </motion.div>
 
         <motion.p
           variants={line}
