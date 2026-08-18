@@ -39,9 +39,9 @@ export default function Hero() {
       >
         <motion.p
           variants={line}
-          className="text-sm tracking-widest uppercase text-neutral-500 mb-6"
+          className="text-lg md:text-xl font-semibold tracking-wide text-neutral-300 mb-6"
         >
-          Noah Adeleye 
+          Noah Adeleye
         </motion.p>
 
         <motion.div variants={line} className="relative">
