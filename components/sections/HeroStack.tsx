@@ -33,7 +33,7 @@ export default function HeroStack() {
 
       <section
         id="about"
-        className="sticky top-0 h-screen overflow-hidden rounded-t-[2.5rem] bg-black"
+        className="sticky top-0 h-screen overflow-y-auto rounded-t-[2.5rem] bg-black"
       >
         <Bio />
       </section>

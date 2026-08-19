@@ -88,26 +88,48 @@ export default function DistortedText({
   }, [radius, maxOffset, maxRotate]);
 
   charRefs.current = [];
+  let charIndex = 0;
+
+  // Split into words vs. whitespace so each word's letters can be
+  // grouped in a non-wrapping span — this keeps line breaks landing
+  // only between words instead of mid-word (which per-character
+  // inline-block spans would otherwise allow).
+  const tokens = text.split(/(\s+)/);
+
+  const renderChar = (char: string) => {
+    const i = charIndex++;
+    const seed = ((i * 137.5) % 100) / 100;
+    return (
+      <span
+        key={i}
+        ref={(el) => {
+          charRefs.current[i] = el;
+        }}
+        data-seed={seed}
+        style={{
+          display: "inline-block",
+          willChange: "transform",
+          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    );
+  };
 
   return (
     <span ref={containerRef} className={className} style={{ display: "inline-block" }}>
-      {text.split("").map((char, i) => {
-        // deterministic per-character seed (no Math.random on render, keeps SSR stable)
-        const seed = ((i * 137.5) % 100) / 100;
+      {tokens.map((token, tokenIndex) => {
+        if (token === "") return null;
+
+        if (/^\s+$/.test(token)) {
+          // whitespace token — fine to break here between words
+          return <span key={`ws-${tokenIndex}`}>{token.split("").map(renderChar)}</span>;
+        }
+
         return (
-          <span
-            key={i}
-            ref={(el) => {
-              charRefs.current[i] = el;
-            }}
-            data-seed={seed}
-            style={{
-              display: "inline-block",
-              willChange: "transform",
-              transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
-            {char === " " ? "\u00A0" : char}
+          <span key={`word-${tokenIndex}`} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+            {token.split("").map(renderChar)}
           </span>
         );
       })}
