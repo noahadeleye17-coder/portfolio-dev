@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "@/components/sections/Hero";
-import Noticing from "@/components/sections/Noticing";
+import Bio from "@/components/sections/Bio";
 
-// Hero stays pinned to the top of the viewport while Noticing scrolls
+// Hero stays pinned to the top of the viewport while Bio scrolls
 // up and covers it — a classic sticky-stack reveal, done with plain
 // CSS `position: sticky` (no scroll-driven JS needed for the base
 // effect). Framer Motion is layered on top only for the extra polish:
@@ -35,7 +35,7 @@ export default function HeroStack() {
         id="about"
         className="sticky top-0 h-screen overflow-hidden rounded-t-[2.5rem] bg-black"
       >
-        <Noticing />
+        <Bio />
       </section>
     </div>
   );
