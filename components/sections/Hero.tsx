@@ -29,7 +29,7 @@ const headlineLines = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 overflow-hidden bg-black">
+    <section className="relative h-full flex flex-col justify-center px-6 md:px-16 overflow-hidden bg-black">
       <StarryBackground />
 
       <motion.div

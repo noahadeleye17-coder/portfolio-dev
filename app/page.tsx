@@ -1,5 +1,4 @@
-import Hero from "@/components/sections/Hero";
-import Noticing from "@/components/sections/Noticing";
+import HeroStack from "@/components/sections/HeroStack";
 import Craft from "@/components/sections/Craft";
 import Proof from "@/components/sections/Proof";
 import Momentum from "@/components/sections/Momentum";
@@ -8,16 +7,15 @@ import Navbar from "@/components/shared/Navbar";
 
 // The spine: one continuous scroll telling the story in order.
 // Hero -> Noticing (human) -> Craft (precision) -> Proof (projects) -> Momentum (close)
-// Navbar anchors: #about -> Noticing, #projects -> Proof, #contact -> Momentum
+// Hero + Noticing are combined in HeroStack: Hero stays pinned via
+// `position: sticky` while Noticing scrolls up and covers it.
+// Navbar anchors: #about -> Noticing (inside HeroStack), #projects -> Proof, #contact -> Momentum
 export default function Home() {
   return (
     <main>
       <Navbar />
-      <Hero />
-      <div id="about">
-        <Noticing />
-        <Craft />
-      </div>
+      <HeroStack />
+      <Craft />
       <div id="projects">
         <Proof />
       </div>

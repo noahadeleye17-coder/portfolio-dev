@@ -7,7 +7,7 @@ import { fadeUp } from "@/lib/motion";
 // Motion should feel calmer here (fadeUp / ease.human) than in Craft.
 export default function Noticing() {
   return (
-    <section className="min-h-screen flex flex-col justify-center px-6 md:px-16 py-24">
+    <section className="h-full flex flex-col justify-center px-6 md:px-16 py-24">
       <ScrollReveal variants={fadeUp}>
         <h2 className="text-3xl md:text-5xl font-semibold max-w-3xl">
           {/* TODO: real examples — FUTA housing struggle, vendor WhatsApp chaos */}
