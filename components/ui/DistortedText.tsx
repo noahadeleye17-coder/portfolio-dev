@@ -16,9 +16,9 @@ interface DistortedTextProps {
 export default function DistortedText({
   text,
   className = "",
-  radius = 120,
-  maxOffset = 14,
-  maxRotate = 18,
+  radius = 90,
+  maxOffset = 7,
+  maxRotate = 8,
 }: DistortedTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -37,7 +37,8 @@ export default function DistortedText({
       mouse.current = null;
     };
 
-    window.addEventListener("pointermove", handleMove);
+    // scoped to this line only — so hovering one line never affects the others
+    container.addEventListener("pointermove", handleMove);
     container.addEventListener("pointerleave", handleLeave);
 
     const tick = () => {
@@ -80,7 +81,7 @@ export default function DistortedText({
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener("pointermove", handleMove);
+      container.removeEventListener("pointermove", handleMove);
       container.removeEventListener("pointerleave", handleLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
