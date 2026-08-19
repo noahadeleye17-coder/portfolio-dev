@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ease, duration } from "@/lib/motion";
 import StarryBackground from "@/components/ui/StarryBackground";
+import DistortedText from "@/components/ui/DistortedText";
 
 const container = {
   hidden: {},
@@ -47,9 +48,7 @@ export default function Hero() {
         <motion.div variants={line} className="relative">
           <h1 className="text-5xl md:text-8xl font-bold leading-[0.95] tracking-tight text-white">
             {headlineLines.map((text, i) => (
-              <span key={i} className="block">
-                {text}
-              </span>
+              <DistortedText key={i} text={text} className="block" />
             ))}
           </h1>
         </motion.div>
