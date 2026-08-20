@@ -29,7 +29,7 @@ const headlineLines = [
 
 export default function Hero() {
   return (
-    <section className="relative h-full flex flex-col justify-center px-6 md:px-16 overflow-hidden bg-black">
+    <section className="relative h-full flex flex-col justify-center px-6 md:px-16 pt-28 md:pt-16 overflow-hidden bg-black">
       <StarryBackground />
 
       <motion.div
@@ -46,7 +46,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.div variants={line} className="relative">
-          <h1 className="text-5xl md:text-8xl font-bold leading-[0.95] tracking-tight text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-white">
             {headlineLines.map((text, i) => (
               <DistortedText key={i} text={text} className="block" />
             ))}
