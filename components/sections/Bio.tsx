@@ -1,6 +1,7 @@
 "use client";
 
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import StarryBackground from "@/components/ui/StarryBackground";
 import { fadeUp } from "@/lib/motion";
 
 // The bio beat — a real photo + plain-language "who is this person"
@@ -10,8 +11,14 @@ import { fadeUp } from "@/lib/motion";
 // that's not this section's job.
 export default function Bio() {
   return (
-    <section className="h-full flex items-center px-6 md:px-16 py-10 md:py-16">
-      <div className="grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-8 md:gap-12 items-center max-w-5xl w-full">
+    <section className="relative h-full flex items-center px-6 md:px-16 py-10 md:py-16 bg-black overflow-hidden">
+      {/* Dimmed vs. Hero's — same field, quieter presence, so this
+          reads as a continuation of the same surface, not a new page */}
+      <div className="absolute inset-0 opacity-30">
+        <StarryBackground />
+      </div>
+
+      <div className="relative z-10 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-8 md:gap-12 items-center max-w-5xl w-full">
         {/* Photo slot — placeholder for now */}
         <ScrollReveal variants={fadeUp}>
           <div
@@ -19,7 +26,7 @@ export default function Bio() {
                        border border-dashed border-white/20 bg-white/5
                        flex items-center justify-center text-neutral-500 text-sm"
           >
-            {/* TODO: real photo — desaturated/duotone + grain treatment to match Hero */}
+            {/* TODO: real photo — desaturated/duotone treatment to match Hero */}
             photo goes here
           </div>
         </ScrollReveal>
