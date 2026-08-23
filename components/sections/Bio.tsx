@@ -52,8 +52,10 @@ export default function Bio() {
               <span>
                 Currently shipping{" "}
                 <a
-                  href="#projects"
-                  className="text-white font-semibold underline underline-offset-4 decoration-white/40 hover:decoration-white transition-colors"
+                  href="https://offcampushub.ng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white font-semibold hover:text-neutral-300 transition-colors"
                 >
                   Off-Campus Hub
                 </a>
