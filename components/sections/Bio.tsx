@@ -50,9 +50,15 @@ export default function Bio() {
             <li className="flex gap-3">
               <span className="text-white">*</span>
               <span>
-                Currently shipping Off-Campus Hub, a student housing &amp;
-                roommate-matching platform with geo-location for FUTA
-                students.
+                Currently shipping{" "}
+                <a
+                  href="#projects"
+                  className="text-white font-semibold underline underline-offset-4 decoration-white/40 hover:decoration-white transition-colors"
+                >
+                  Off-Campus Hub
+                </a>
+                , a student housing &amp; roommate-matching platform with
+                geo-location for FUTA students.
               </span>
             </li>
             <li className="flex gap-3">
